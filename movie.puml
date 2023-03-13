@@ -1,0 +1,60 @@
+@startuml
+title Online Movie Ticket Booking Platform Sequence Diagram
+
+actor User 
+actor Admin 
+participant Application
+participant MovieDB
+participant SeatSystem
+participant Payment
+
+
+== User searches for a movie ==
+
+User -> Application: Search for movie by title
+Application -> MovieDB: Search for movie
+MovieDB -> Application: Return list of matching movies
+Application -> User: Display list of movies
+
+== User views movie details ==
+
+User -> Application: Select movie
+Application -> MovieDB: Get movie details
+MovieDB -> Application: Return movie details
+Application -> User: Display movie details and showtimes
+
+== User selects showtime and seats ==
+
+User -> Application: Select showtime
+Application -> MovieDB: Get available seats
+MovieDB -> Application: Return available seats
+Application -> User: Display available seats
+User -> Application: Select seats
+Application -> SeatSystem: Check seat availability
+SeatSystem -> Application: Return seat availability
+Application -> User: Confirm seat selection
+
+== System confirms reservation ==
+
+User -> Application: Proceed to checkout
+Application -> Payment: Process payment
+Payment -> Application: Payment successful
+Application -> SeatSystem: Create reservation
+SeatSystem -> Application: Return reservation details
+Application -> User: Display reservation details
+
+== Admin manages showtimes ==
+
+Admin -> Application: Log in
+Application -> Admin: Authenticate
+Admin -> Application: Access admin panel
+Application -> MovieDB: Get list of movies
+MovieDB -> Application: Return list of movies
+Application -> Admin: Display list of movies
+Admin -> Application: Add movie
+Application -> MovieDB: Add movie
+Admin -> Application: Remove movie
+Application -> MovieDB: Remove movie
+Admin -> Application: Logout
+
+@enduml

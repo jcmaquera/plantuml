@@ -1,0 +1,51 @@
+@startuml
+
+actor User #blue
+actor Admin #red
+participant Application
+participant Books
+participant Cart
+participant PaymentGateway
+
+
+== User browses the store ==
+
+User -> Application: Browse books
+Application -> Books: Get book list
+Books -> Application: Return book list
+Application -> User: Display book list
+
+== User adds book to cart ==
+
+User -> Application: Add book to cart
+Application -> Cart: Add book
+Cart -> Application: Return updated cart
+Application -> User: Display updated cart
+
+== User proceeds to checkout ==
+
+User -> Application: Proceed to checkout
+Application -> Cart: Get cart contents
+Cart -> Application: Return cart contents
+Application -> User: Display cart contents
+User -> Application: Complete purchase
+Application -> PaymentGateway: Process payment
+PaymentGateway -> Application: Payment successful
+Application -> Books: Update book inventory
+Application -> User: Display confirmation
+
+== Admin adds/removes books ==
+
+Admin -> Application: Log in
+Application -> Admin: Authenticate
+Admin -> Application: Access admin panel
+Application -> Books: Get book list
+Books -> Application: Return book list
+Application -> Admin: Display book list
+Admin -> Application: Add book
+Application -> Books: Add book
+Admin -> Application: Remove book
+Application -> Books: Remove book
+Admin -> Application: Logout
+
+@enduml
